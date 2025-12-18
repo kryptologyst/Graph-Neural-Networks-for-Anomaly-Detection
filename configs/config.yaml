@@ -1,0 +1,52 @@
+# Default configuration for anomaly detection experiments
+defaults:
+  - _self_
+
+# Model configuration
+model:
+  name: "gae"  # Options: gae, vgae, gat_gae, sage_gae, dominant
+  hidden_channels: 64
+  out_channels: 32
+  dropout: 0.0
+  num_layers: 2
+  num_heads: 4  # For GAT models
+
+# Dataset configuration
+dataset:
+  name: "synthetic_1000_barabasi_albert_0.1"
+  root: "./data"
+  anomaly_ratio: 0.1
+  graph_type: "barabasi_albert"  # Options: barabasi_albert, sbm
+  anomaly_type: "structural"  # Options: structural, feature, mixed
+
+# Training configuration
+training:
+  epochs: 100
+  lr: 0.01
+  weight_decay: 5e-4
+  patience: 10
+  batch_size: 1
+  use_wandb: false
+  project_name: "gnn-anomaly-detection"
+
+# Evaluation configuration
+evaluation:
+  k_values: [10, 50, 100, 200]
+  methods: ["reconstruction", "embedding_norm", "distance"]
+
+# Paths
+paths:
+  data_dir: "./data"
+  checkpoints_dir: "./checkpoints"
+  assets_dir: "./assets"
+  logs_dir: "./logs"
+
+# Device configuration
+device:
+  seed: 42
+  deterministic: true
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
